@@ -1,5 +1,11 @@
 extends CharacterBody2D
 
+var controls = {
+	movement = true,
+	jump = true,
+	double_jump = true
+}
+
 const MAX_SPEED_TICK = 200.0
 var SPEED_TICK = 0.0
 
@@ -44,8 +50,10 @@ func _physics_process(delta: float) -> void:
 		double_jumped = false
 
 	if not ded:
-		horizontal_direction()
-		jump_button_check()
+		if controls.movement:
+			horizontal_direction()
+		if controls.jump:
+			jump_button_check()
 	
 	CUR_SPEED = SPEED
 	CUR_SPEED += SPEED_TICK
@@ -71,6 +79,7 @@ func jump_button_check():
 			random_jump_num =  1
 		velocity.y = JUMP_VELOCITY
 	elif Input.is_action_just_pressed('Move_Jump') and Input.is_action_pressed('Move_Up'):
+		if not controls.double_jump: return
 		if not double_jumped and not is_on_floor() and velocity.y > JUMP_VELOCITY / 2:
 			double_jumped = true
 			velocity.y += JUMP_VELOCITY + DOUBLE_JUMP_ADDITIONAL_VELOCITY
