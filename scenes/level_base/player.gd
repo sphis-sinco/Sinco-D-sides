@@ -3,7 +3,7 @@ extends CharacterBody2D
 var controls = {
 	movement = true,
 	jump = true,
-	double_jump = true
+	double_jump = false
 }
 
 const MAX_SPEED_TICK = 200.0
