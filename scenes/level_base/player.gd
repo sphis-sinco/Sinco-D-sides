@@ -1,8 +1,9 @@
 extends CharacterBody2D
 
-const MAX_SPEED_TICK = 255.0
+const MAX_SPEED_TICK = 200.0
 var SPEED_TICK = 0.0
 
+var CUR_SPEED = 300.0
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
@@ -10,45 +11,54 @@ const JUMP_VELOCITY = -400.0
 
 var random_jump_num = 1
 
+var direction = 0
+
+@onready var label: Label = $Camera2D/Label
+
 func _physics_process(delta: float) -> void:
+	var speed_fall = 15
 	
-	# Add the gravity.
+	label.text = 'velocity: '+str(velocity)
+	label.text +='\ncurSpeed: ' + str(CUR_SPEED)
+	
 	if not is_on_floor():
 		animated_sprite_2d.play('jump-'+str(random_jump_num))
 		velocity += get_gravity() * delta
 
-	# Handle jump.
 	if Input.is_action_just_pressed('Move_Jump') and is_on_floor():
 		random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
 		velocity.y = JUMP_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis('Move_Left', 'Move_Right')
+	direction = Input.get_axis('Move_Left', 'Move_Right')
 	
 	if direction < 0:
 		animated_sprite_2d.flip_h = true
 	elif direction > 0:
 		animated_sprite_2d.flip_h = false
 	
-	if direction:
-		velocity.x = direction * (SPEED + SPEED_TICK)
-	else:
-		velocity.x = move_toward(velocity.x, 0, 15 + (SPEED_TICK * 0.05))
+	CUR_SPEED = SPEED
+	CUR_SPEED += SPEED_TICK
+	CUR_SPEED = direction * CUR_SPEED
 	
-	if abs(velocity.x) > 0 and not is_on_wall():
-		if abs(SPEED_TICK) < 1:
-			SPEED_TICK = 1
-		else:
-			SPEED_TICK = SPEED_TICK * 1.05
-			if (SPEED_TICK > MAX_SPEED_TICK):
-				SPEED_TICK = MAX_SPEED_TICK
+	if direction:
+		velocity.x = move_toward(velocity.x, CUR_SPEED, speed_fall)
 	else:
-		SPEED_TICK = move_toward(SPEED_TICK, 0, (SPEED + SPEED_TICK))
+		velocity.x = move_toward(velocity.x, 0, speed_fall)
+	
+	if abs(direction) > 0 and not is_on_wall():
+		if abs(direction) > 0:
+			if abs(SPEED_TICK) < 1:
+				SPEED_TICK = 1
+			else:
+				SPEED_TICK = SPEED_TICK * 1.025
+				if (SPEED_TICK > MAX_SPEED_TICK):
+					SPEED_TICK = MAX_SPEED_TICK
+	else:
+		SPEED_TICK = move_toward(SPEED_TICK, 0, speed_fall)
 	
 	if abs(velocity.x) > 0 and is_on_floor():
 		random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
-		if SPEED_TICK > (MAX_SPEED_TICK * (3/4)):
+		if SPEED_TICK > (MAX_SPEED_TICK / 1.5):
 			animated_sprite_2d.play('run')
 		else:
 			animated_sprite_2d.play('walk')
