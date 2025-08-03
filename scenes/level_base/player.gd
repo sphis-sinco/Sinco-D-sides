@@ -14,32 +14,25 @@ var random_jump_num = 1
 var direction = 0
 
 @onready var label: Label = $Camera2D/Label
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+
+var ded = false
+
+@onready var camera_2d: Camera2D = $Camera2D
+
+var speed_fall = 15
 
 func _physics_process(delta: float) -> void:
-	var speed_fall = 15
+	death_check_and_loop()
 	
-	label.text = 'velocity: '+str(velocity)
-	label.text +='\ncurSpeed: ' + str(CUR_SPEED)
+	debug_label_setup()
 	
 	if not is_on_floor():
-		animated_sprite_2d.play('jump-'+str(random_jump_num))
 		velocity += get_gravity() * delta
 
-	direction = Input.get_axis('Move_Left', 'Move_Right')
-	
-	if direction < 0:
-		random_jump_num = 1
-		animated_sprite_2d.flip_h = true
-	elif direction > 0:
-		random_jump_num = 2
-		animated_sprite_2d.flip_h = false
-
-	if Input.is_action_just_pressed('Move_Jump') and is_on_floor():
-		if random_jump_num == 1:
-			random_jump_num = 2
-		else:
-			random_jump_num =  1
-		velocity.y = JUMP_VELOCITY
+	if not ded:
+		horizontal_direction()
+		jump_button_check()
 	
 	CUR_SPEED = SPEED
 	CUR_SPEED += SPEED_TICK
@@ -50,6 +43,56 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed_fall)
 	
+	speed_tick()
+	
+	animations()
+	
+	move_and_slide()
+
+func jump_button_check():
+	if Input.is_action_just_pressed('Move_Jump') and is_on_floor():
+		if random_jump_num == 1:
+			random_jump_num = 2
+		else:
+			random_jump_num =  1
+		velocity.y = JUMP_VELOCITY
+
+func horizontal_direction():
+	direction = Input.get_axis('Move_Left', 'Move_Right')
+	
+	if direction < 0:
+		random_jump_num = 1
+		animated_sprite_2d.flip_h = true
+	elif direction > 0:
+		random_jump_num = 2
+		animated_sprite_2d.flip_h = false
+
+const rotate_on_death = true
+const death_rotation_speed = .01
+const death_jump_velocity = -300.0
+
+func death_check_and_loop():
+	if visible == false or ded:
+		if not ded:
+			speed_fall = speed_fall * 2
+			collision_shape_2d.disabled = true
+			visible = true
+			ded = true
+			velocity.y += death_jump_velocity
+		
+		if rotate_on_death:
+			if animated_sprite_2d.flip_h:
+				rotate(-death_rotation_speed)
+			else:
+				rotate(death_rotation_speed)
+		
+		direction = move_toward(direction, 0, 0.0125)
+
+func debug_label_setup():
+	label.text = 'velocity: '+str(velocity)
+	label.text +='\ncurSpeed: ' + str(CUR_SPEED)
+
+func speed_tick():
 	if abs(direction) > 0 and not is_on_wall():
 		if abs(direction) > 0:
 			if abs(SPEED_TICK) < 1:
@@ -60,17 +103,17 @@ func _physics_process(delta: float) -> void:
 					SPEED_TICK = MAX_SPEED_TICK
 	else:
 		SPEED_TICK = move_toward(SPEED_TICK, 0, speed_fall)
-	
+
+func animations():
 	if abs(velocity.x) > 0 and is_on_floor():
-		# random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
 		if SPEED_TICK > (MAX_SPEED_TICK / 1.5):
 			animated_sprite_2d.play('run')
 		else:
 			animated_sprite_2d.play('walk')
 	elif is_on_floor():
-		# random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
 		animated_sprite_2d.play('idle')
+	else:
+		animated_sprite_2d.play('jump-'+str(random_jump_num))
 	
-	# print(SPEED_TICK)
-
-	move_and_slide()
+	if ded:
+		animated_sprite_2d.play('death')
