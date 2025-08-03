@@ -25,16 +25,21 @@ func _physics_process(delta: float) -> void:
 		animated_sprite_2d.play('jump-'+str(random_jump_num))
 		velocity += get_gravity() * delta
 
-	if Input.is_action_just_pressed('Move_Jump') and is_on_floor():
-		random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
-		velocity.y = JUMP_VELOCITY
-
 	direction = Input.get_axis('Move_Left', 'Move_Right')
 	
 	if direction < 0:
+		random_jump_num = 1
 		animated_sprite_2d.flip_h = true
 	elif direction > 0:
+		random_jump_num = 2
 		animated_sprite_2d.flip_h = false
+
+	if Input.is_action_just_pressed('Move_Jump') and is_on_floor():
+		if random_jump_num == 1:
+			random_jump_num = 2
+		else:
+			random_jump_num =  1
+		velocity.y = JUMP_VELOCITY
 	
 	CUR_SPEED = SPEED
 	CUR_SPEED += SPEED_TICK
@@ -57,13 +62,13 @@ func _physics_process(delta: float) -> void:
 		SPEED_TICK = move_toward(SPEED_TICK, 0, speed_fall)
 	
 	if abs(velocity.x) > 0 and is_on_floor():
-		random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
+		# random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
 		if SPEED_TICK > (MAX_SPEED_TICK / 1.5):
 			animated_sprite_2d.play('run')
 		else:
 			animated_sprite_2d.play('walk')
 	elif is_on_floor():
-		random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
+		# random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
 		animated_sprite_2d.play('idle')
 	
 	# print(SPEED_TICK)
