@@ -22,10 +22,21 @@ var ded = false
 
 var speed_fall = 15
 
+var floor_angle = 0.0
+
 func _physics_process(delta: float) -> void:
+	rotation_degrees = 0
+	if process_mode == Node.PROCESS_MODE_DISABLED: return
+	
+	# This makes 1 air, 0 floor, and .5 for the 45 degree slopes
+	floor_angle = roundf(get_floor_angle()) / 2
+	
 	death_check_and_loop()
 	
 	debug_label_setup()
+	
+	floor_angle_rotation()
+	
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -49,6 +60,10 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+func floor_angle_rotation():
+	if floor_angle == 0.5:
+		rotation_degrees = direction * -45
+	
 func jump_button_check():
 	if Input.is_action_just_pressed('Move_Jump') and is_on_floor():
 		if random_jump_num == 1:
@@ -74,6 +89,7 @@ const death_jump_velocity = -300.0
 func death_check_and_loop():
 	if visible == false or ded:
 		if not ded:
+			LevelBase.can_toggle_pause = false
 			speed_fall = speed_fall * 2
 			collision_shape_2d.disabled = true
 			visible = true
@@ -90,7 +106,9 @@ func death_check_and_loop():
 
 func debug_label_setup():
 	label.text = 'velocity: '+str(velocity)
+	label.text +='\nreal velocity: ' + str(get_real_velocity())
 	label.text +='\ncurSpeed: ' + str(CUR_SPEED)
+	label.text +='\nfloor_angle: ' + str(floor_angle)
 
 func speed_tick():
 	if abs(direction) > 0 and not is_on_wall():
