@@ -133,7 +133,7 @@ position = Vector2(-29, 901)
 script = ExtResource("6_krm4r")
 
 [connection signal="body_entered" from="Gameplay/SceneTileMapLayer/Spike" to="Gameplay/SceneTileMapLayer/Spike" method="_on_body_entered"]
-[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@83744" to="Gameplay/SceneTileMapLayer/@Area2D@83744" method="_on_body_entered"]
-[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@83745" to="Gameplay/SceneTileMapLayer/@Area2D@83745" method="_on_body_entered"]
-[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@83746" to="Gameplay/SceneTileMapLayer/@Area2D@83746" method="_on_body_entered"]
-[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@83747" to="Gameplay/SceneTileMapLayer/@Area2D@83747" method="_on_body_entered"]
+[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@95234" to="Gameplay/SceneTileMapLayer/@Area2D@95234" method="_on_body_entered"]
+[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@95235" to="Gameplay/SceneTileMapLayer/@Area2D@95235" method="_on_body_entered"]
+[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@95236" to="Gameplay/SceneTileMapLayer/@Area2D@95236" method="_on_body_entered"]
+[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@95237" to="Gameplay/SceneTileMapLayer/@Area2D@95237" method="_on_body_entered"]

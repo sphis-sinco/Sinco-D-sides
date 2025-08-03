@@ -6,6 +6,8 @@ var SPEED_TICK = 0.0
 var CUR_SPEED = 300.0
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
+const DOUBLE_JUMP_ADDITIONAL_VELOCITY = -200.0
+var double_jumped = false
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -38,6 +40,8 @@ func _physics_process(delta: float) -> void:
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	else:
+		double_jumped = false
 
 	if not ded:
 		horizontal_direction()
@@ -66,6 +70,10 @@ func jump_button_check():
 		else:
 			random_jump_num =  1
 		velocity.y = JUMP_VELOCITY
+	elif Input.is_action_just_pressed('Move_Jump') and Input.is_action_pressed('Move_Up'):
+		if not double_jumped and not is_on_floor() and velocity.y > JUMP_VELOCITY / 2:
+			double_jumped = true
+			velocity.y += JUMP_VELOCITY + DOUBLE_JUMP_ADDITIONAL_VELOCITY
 
 func horizontal_direction():
 	direction = 0
@@ -107,6 +115,7 @@ func debug_label_setup():
 	label.text +='\ncurSpeed: ' + str(CUR_SPEED)
 	label.text +='\nfloor_angle: ' + str(floor_angle)
 	label.text +='\nSPEED_TICK: ' + str(SPEED_TICK)
+	label.text +='\ndouble_jumped: ' + str(double_jumped)
 
 func speed_tick():
 	if abs(direction) > 0 and not is_on_wall():
@@ -131,7 +140,10 @@ func animations():
 	elif is_on_floor():
 		animated_sprite_2d.play('idle')
 	else:
-		animated_sprite_2d.play('jump-'+str(random_jump_num))
+		if abs(velocity.y) > JUMP_VELOCITY and double_jumped:
+			animated_sprite_2d.play('jump-double')
+		else:
+			animated_sprite_2d.play('jump-'+str(random_jump_num))
 	
 	if ded:
 		animated_sprite_2d.play('death')
