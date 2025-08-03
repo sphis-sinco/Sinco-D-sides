@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=4 uid="uid://cliumf3rtnpi0"]
+[gd_scene load_steps=8 format=4 uid="uid://cliumf3rtnpi0"]
 
 [ext_resource type="Texture2D" uid="uid://ciw4egalb8j5q" path="res://assets/tilesets/template.png" id="1_osu2p"]
 [ext_resource type="Texture2D" uid="uid://dbocgm51rphas" path="res://assets/tilesets/bushbash.png" id="2_58o6h"]
 [ext_resource type="PackedScene" uid="uid://ccucjob0pcci" path="res://scenes/level_base/player.tscn" id="2_bkdr1"]
+[ext_resource type="PackedScene" uid="uid://lv83ahw40o6a" path="res://scenes/level_base/death_zone.tscn" id="4_58o6h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_58o6h"]
 texture = ExtResource("1_osu2p")
@@ -61,3 +62,6 @@ offset_right = -262.0
 offset_bottom = -139.0
 text = "SPEED:
 SPEED_TICK: "
+
+[node name="Area2D" parent="." instance=ExtResource("4_58o6h")]
+position = Vector2(-29, 901)
