@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ccucjob0pcci"]
+[gd_scene load_steps=13 format=3 uid="uid://ccucjob0pcci"]
 
 [ext_resource type="Script" uid="uid://b30tjt3qtnd7y" path="res://scenes/level_base/player.gd" id="1_dlxjo"]
 [ext_resource type="Texture2D" uid="uid://cnfylmi6vukka" path="res://assets/characters/Osin.png" id="2_41fun"]
@@ -20,6 +20,10 @@ region = Rect2(32, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_41fun"]
 atlas = ExtResource("2_41fun")
 region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47vfl"]
+atlas = ExtResource("2_41fun")
+region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_30otd"]
 atlas = ExtResource("2_41fun")
@@ -69,6 +73,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_47vfl")
+}],
+"loop": true,
+"name": &"pre-walk",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_3xeld")
 }, {
 "duration": 1.0,
@@ -112,4 +124,4 @@ shape = SubResource("CircleShape2D_41fun")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_t1id3")
-animation = &"death"
+animation = &"pre-walk"

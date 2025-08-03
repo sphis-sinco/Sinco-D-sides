@@ -102,6 +102,7 @@ func debug_label_setup():
 	label.text +='\nreal velocity: ' + str(get_real_velocity())
 	label.text +='\ncurSpeed: ' + str(CUR_SPEED)
 	label.text +='\nfloor_angle: ' + str(floor_angle)
+	label.text +='\nSPEED_TICK: ' + str(SPEED_TICK)
 
 func speed_tick():
 	if abs(direction) > 0 and not is_on_wall():
@@ -119,6 +120,8 @@ func animations():
 	if abs(velocity.x) > 0 and is_on_floor():
 		if SPEED_TICK > (MAX_SPEED_TICK / 1.5):
 			animated_sprite_2d.play('run')
+		elif SPEED_TICK <= 1.1 and direction or abs(velocity.x) < 100:
+			animated_sprite_2d.play('pre-walk')
 		else:
 			animated_sprite_2d.play('walk')
 	elif is_on_floor():

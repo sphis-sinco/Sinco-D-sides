@@ -120,9 +120,3 @@ position = Vector2(-29, 901)
 
 [node name="EnablePausing" type="Node" parent="Scripts"]
 script = ExtResource("6_krm4r")
-
-[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@39626" to="Gameplay/SceneTileMapLayer/@Area2D@39626" method="_on_body_entered"]
-[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@39627" to="Gameplay/SceneTileMapLayer/@Area2D@39627" method="_on_body_entered"]
-[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@39628" to="Gameplay/SceneTileMapLayer/@Area2D@39628" method="_on_body_entered"]
-[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@39629" to="Gameplay/SceneTileMapLayer/@Area2D@39629" method="_on_body_entered"]
-[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@39630" to="Gameplay/SceneTileMapLayer/@Area2D@39630" method="_on_body_entered"]
