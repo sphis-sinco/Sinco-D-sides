@@ -3,8 +3,7 @@
 [ext_resource type="Script" uid="uid://b30tjt3qtnd7y" path="res://scenes/level_base/player.gd" id="1_dlxjo"]
 [ext_resource type="Texture2D" uid="uid://cnfylmi6vukka" path="res://assets/characters/Osin.png" id="2_41fun"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_17nir"]
-size = Vector2(32, 32)
+[sub_resource type="CircleShape2D" id="CircleShape2D_41fun"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0p6tf"]
 atlas = ExtResource("2_41fun")
@@ -88,12 +87,14 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+floor_snap_length = 45.0
 script = ExtResource("1_dlxjo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_17nir")
+position = Vector2(0, 6)
+shape = SubResource("CircleShape2D_41fun")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_t1id3")
-animation = &"run"
-frame_progress = 0.332894
+animation = &"idle"
+frame_progress = 0.836062

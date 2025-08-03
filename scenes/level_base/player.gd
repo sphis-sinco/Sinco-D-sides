@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 				SPEED_TICK = MAX_SPEED_TICK
 	else:
 		SPEED_TICK = move_toward(SPEED_TICK, 0, (SPEED + SPEED_TICK))
-		
+	
 	if abs(velocity.x) > 0 and is_on_floor():
 		random_jump_num = RandomNumberGenerator.new().randi_range(1,2)
 		if SPEED_TICK > (MAX_SPEED_TICK * (3/4)):
