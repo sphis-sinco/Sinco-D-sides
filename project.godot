@@ -12,7 +12,12 @@ config_version=5
 
 config/name="Sinco: D-Sides"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://bqsatpj2umoup"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
 
 [editor]
 
