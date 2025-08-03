@@ -23,4 +23,7 @@ func _process(delta: float) -> void:
 			
 	if Input.is_action_just_pressed('Pause') and can_toggle_pause:
 		paused = !paused
+	if Input.is_action_just_pressed('Pause_Reset') and can_toggle_pause and paused:
+		get_tree().reload_current_scene()
+
 	

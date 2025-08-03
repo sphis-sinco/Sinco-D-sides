@@ -59,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func jump_button_check():
+	if Input.is_action_pressed('Camera_Move'): return
 	if Input.is_action_just_pressed('Move_Jump') and is_on_floor():
 		if random_jump_num == 1:
 			random_jump_num = 2
@@ -67,6 +68,8 @@ func jump_button_check():
 		velocity.y = JUMP_VELOCITY
 
 func horizontal_direction():
+	direction = 0
+	if Input.is_action_pressed('Camera_Move'): return
 	direction = Input.get_axis('Move_Left', 'Move_Right')
 	
 	if direction < 0:
