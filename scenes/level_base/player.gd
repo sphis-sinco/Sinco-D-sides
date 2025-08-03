@@ -25,7 +25,8 @@ var speed_fall = 15
 var floor_angle = 0.0
 
 func _physics_process(delta: float) -> void:
-	rotation_degrees = 0
+	if not ded:
+		rotation_degrees = 0
 	if process_mode == Node.PROCESS_MODE_DISABLED: return
 	
 	# This makes 1 air, 0 floor, and .5 for the 45 degree slopes
