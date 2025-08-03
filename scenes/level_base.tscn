@@ -17,7 +17,7 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8rhjg"]
 texture = ExtResource("2_58o6h")
-texture_region_size = Vector2i(32, 32)
+texture_region_size = Vector2i(1, 1)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:0/0 = 0
@@ -63,5 +63,5 @@ offset_bottom = -139.0
 text = "SPEED:
 SPEED_TICK: "
 
-[node name="Area2D" parent="." instance=ExtResource("4_58o6h")]
+[node name="Death Zone" parent="." instance=ExtResource("4_58o6h")]
 position = Vector2(-29, 901)
