@@ -35,9 +35,6 @@ func _physics_process(delta: float) -> void:
 	
 	debug_label_setup()
 	
-	floor_angle_rotation()
-	
-	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -59,10 +56,6 @@ func _physics_process(delta: float) -> void:
 	animations()
 	
 	move_and_slide()
-
-func floor_angle_rotation():
-	if floor_angle == 0.5:
-		rotation_degrees = direction * -45
 	
 func jump_button_check():
 	if Input.is_action_just_pressed('Move_Jump') and is_on_floor():
