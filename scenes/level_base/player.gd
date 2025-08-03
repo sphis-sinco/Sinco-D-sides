@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
-var controls = {
+var manager = {
 	movement = true,
 	jump = true,
-	double_jump = false
+	double_jump = false,
+	flipped_animations = true,
+	flip_horizontal = true,
 }
 
 const MAX_SPEED_TICK = 200.0
@@ -50,9 +52,9 @@ func _physics_process(delta: float) -> void:
 		double_jumped = false
 
 	if not ded:
-		if controls.movement:
+		if manager.movement:
 			horizontal_direction()
-		if controls.jump:
+		if manager.jump:
 			jump_button_check()
 	
 	CUR_SPEED = SPEED
@@ -79,10 +81,12 @@ func jump_button_check():
 			random_jump_num =  1
 		velocity.y = JUMP_VELOCITY
 	elif Input.is_action_just_pressed('Move_Jump') and Input.is_action_pressed('Move_Up'):
-		if not controls.double_jump: return
+		if not manager.double_jump: return
 		if not double_jumped and not is_on_floor() and velocity.y > JUMP_VELOCITY / 2:
 			double_jumped = true
 			velocity.y += JUMP_VELOCITY + DOUBLE_JUMP_ADDITIONAL_VELOCITY
+
+var flipped = false
 
 func horizontal_direction():
 	direction = 0
@@ -91,10 +95,14 @@ func horizontal_direction():
 	
 	if direction < 0:
 		random_jump_num = 1
-		animated_sprite_2d.flip_h = true
+		flipped = true
+		if manager.flip_horizontal:
+			animated_sprite_2d.flip_h = true
 	elif direction > 0:
 		random_jump_num = 2
-		animated_sprite_2d.flip_h = false
+		flipped = false
+		if manager.flip_horizontal:
+			animated_sprite_2d.flip_h = false
 
 const rotate_on_death = true
 const death_rotation_speed = .01
@@ -139,20 +147,28 @@ func speed_tick():
 		SPEED_TICK = move_toward(SPEED_TICK, 0, speed_fall)
 
 func animations():
+	var animation_name = animated_sprite_2d.animation
 	if abs(velocity.x) > 0 and is_on_floor():
 		if SPEED_TICK > (MAX_SPEED_TICK / 1.5):
-			animated_sprite_2d.play('run')
+			animation_name = 'run'
 		elif SPEED_TICK <= 1.1 and direction or abs(velocity.x) < 100:
-			animated_sprite_2d.play('pre-walk')
+			animation_name = 'pre-walk'
 		else:
-			animated_sprite_2d.play('walk')
+			animation_name = 'walk'
 	elif is_on_floor():
-		animated_sprite_2d.play('idle')
+		animation_name = 'idle'
 	else:
 		if abs(velocity.y) > JUMP_VELOCITY and double_jumped:
-			animated_sprite_2d.play('jump-double')
+			animation_name = 'jump-double'
 		else:
-			animated_sprite_2d.play('jump-'+str(random_jump_num))
+			animation_name = 'jump-'+str(random_jump_num)
 	
 	if ded:
-		animated_sprite_2d.play('death')
+		animation_name = 'death'
+	
+	if manager.flipped_animations and flipped:
+		animation_name += '_flipped'
+	
+	if animated_sprite_2d.animation != animation_name:
+		animated_sprite_2d.play(animation_name)
+	
