@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://cliumf3rtnpi0"]
+[gd_scene load_steps=19 format=4 uid="uid://cliumf3rtnpi0"]
 
 [ext_resource type="Texture2D" uid="uid://ciw4egalb8j5q" path="res://assets/tilesets/template.png" id="1_osu2p"]
 [ext_resource type="Texture2D" uid="uid://dbocgm51rphas" path="res://assets/tilesets/bushbash.png" id="2_58o6h"]
@@ -7,6 +7,24 @@
 [ext_resource type="PackedScene" uid="uid://lv83ahw40o6a" path="res://scenes/level_base/death_zone.tscn" id="4_58o6h"]
 [ext_resource type="Script" uid="uid://rmsgy5vmonfj" path="res://scenes/camera.gd" id="5_8n3nq"]
 [ext_resource type="Script" uid="uid://4t3itqkc6xh0" path="res://scenes/level_base/enable_pausing.gd" id="6_krm4r"]
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_2v7b3"]
+tile_data = PackedInt32Array(0, 917505, 268435456, 1, 851969, 268435456, 65537, 720897, 268435456, 131073, 720897, 268435456, 196609, 786433, 268435456, 2, 1, 0, 65538, 65537, 0, 131074, 65537, 0, 196610, 655361, 0, 3, 1, 0, 65539, 65537, 0, 131075, 65537, 0, 196611, 655361, 0, 4, 1, 0, 65540, 65537, 0, 131076, 65537, 0, 196612, 655361, 0, 5, 1, 0, 65541, 65537, 0, 131077, 65537, 0, 196613, 655361, 0, 6, 851969, 0, 65542, 720897, 0, 131078, 720897, 0, 196614, 786433, 0, 7, 917505, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_8n3nq"]
+tile_data = PackedInt32Array(0, 1, 0, 65536, 65537, 0, 131072, 65537, 0, 196608, 655361, 0, 1, 1, 0, 65537, 65537, 0, 131073, 65537, 0, 196609, 655361, 0, 2, 1, 0, 65538, 65537, 0, 131074, 65537, 0, 196610, 655361, 0, 3, 1, 0, 65539, 65537, 0, 131075, 65537, 0, 196611, 655361, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_6k8qy"]
+tile_data = PackedInt32Array(0, 917505, 268435456, 1, 851969, 268435456, 65537, 720897, 268435456, 131073, 720897, 268435456, 196609, 786433, 268435456)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_evabm"]
+tile_data = PackedInt32Array(0, 65537, 0, 65536, 65537, 0, 1, 65537, 0, 65537, 65537, 0, 2, 65537, 0, 65538, 65537, 0, 3, 65537, 0, 65539, 65537, 0, 4, 65537, 0, 65540, 65537, 0, 5, 65537, 0, 65541, 65537, 0, 6, 65537, 0, 65542, 65537, 0, 7, 65537, 0, 65543, 65537, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_qurbw"]
+tile_data = PackedInt32Array(0, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0)
+
+[sub_resource type="TileMapPattern" id="TileMapPattern_vm68j"]
+tile_data = PackedInt32Array(0, 917505, 268435456, 1, 851969, 268435456, 65537, 786433, 268435456, 2, 1, 0, 65538, 655361, 0, 3, 1, 0, 65539, 655361, 0, 4, 1, 0, 65540, 655361, 0, 5, 1, 0, 65541, 655361, 0, 6, 851969, 0, 65542, 786433, 0, 7, 917505, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_58o6h"]
 texture = ExtResource("1_osu2p")
@@ -56,6 +74,12 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_58o6h")
 sources/1 = SubResource("TileSetAtlasSource_8rhjg")
+pattern_0 = SubResource("TileMapPattern_2v7b3")
+pattern_1 = SubResource("TileMapPattern_8n3nq")
+pattern_2 = SubResource("TileMapPattern_6k8qy")
+pattern_3 = SubResource("TileMapPattern_evabm")
+pattern_4 = SubResource("TileMapPattern_qurbw")
+pattern_5 = SubResource("TileMapPattern_vm68j")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_krm4r"]
 scenes/2/scene = ExtResource("3_8rhjg")
@@ -96,29 +120,27 @@ text = "SPEED:
 SPEED_TICK: "
 
 [node name="PauseScreen" type="Node2D" parent="Gameplay/Player/Camera2D"]
-visible = false
-position = Vector2(-35, -47)
-scale = Vector2(0.5, 0.5)
 
 [node name="ColorRect" type="ColorRect" parent="Gameplay/Player/Camera2D/PauseScreen"]
-offset_left = -570.0
-offset_top = -266.0
-offset_right = 710.0
-offset_bottom = 454.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1280.0
+offset_top = -720.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
 color = Color(0, 0, 0, 0.5)
 
 [node name="Pause Text" type="Label" parent="Gameplay/Player/Camera2D/PauseScreen/ColorRect"]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -360.0
-offset_right = -960.0
-offset_bottom = -180.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(4, 4)
 text = "PAUSED
 (press escape to reset)"
 horizontal_alignment = 1
@@ -131,3 +153,9 @@ position = Vector2(-29, 901)
 
 [node name="EnablePausing" type="Node" parent="Scripts"]
 script = ExtResource("6_krm4r")
+
+[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/Spike" to="Gameplay/SceneTileMapLayer/Spike" method="_on_body_entered"]
+[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@121691" to="Gameplay/SceneTileMapLayer/@Area2D@121691" method="_on_body_entered"]
+[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@121692" to="Gameplay/SceneTileMapLayer/@Area2D@121692" method="_on_body_entered"]
+[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@121693" to="Gameplay/SceneTileMapLayer/@Area2D@121693" method="_on_body_entered"]
+[connection signal="body_entered" from="Gameplay/SceneTileMapLayer/@Area2D@121694" to="Gameplay/SceneTileMapLayer/@Area2D@121694" method="_on_body_entered"]

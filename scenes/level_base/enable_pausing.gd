@@ -6,6 +6,9 @@ extends Node
 func _ready() -> void:
 	LevelBase.gameplay = $'../../Gameplay'
 	LevelBase.pause_screen = $'../../Gameplay/Player/Camera2D/PauseScreen'
+	LevelBase.pause_screen_rect = $'../../Gameplay/Player/Camera2D/PauseScreen/ColorRect'
+	LevelBase.camera = $'../../Gameplay/Player/Camera2D'
+	LevelBase.player = $'../../Gameplay/Player'
 	LevelBase.can_toggle_pause = true
 	LevelBase.paused = false
 	
